@@ -11,6 +11,8 @@
     <properties>
         <thunbnailator.version>0.4.8</thunbnailator.version>
         <junit.version>4.12</junit.version>
+        <org.mockito.version>1.10.19</org.mockito.version>
+        <org.powermock.version>1.6.5</org.powermock.version>
     </properties>
 
     <dependencies>
@@ -20,6 +22,26 @@
             <artifactId>thumbnailator</artifactId>
             <version>${thunbnailator.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${org.mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>${org.powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <version>${org.powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+
 
         <!-- junit start-->
         <dependency>
