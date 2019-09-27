@@ -47,4 +47,7 @@ public class CustomClassLoader extends ClassLoader{
         Method method = clazz.getMethod("say", null);
         method.invoke(instance);//Hello
     }
+
+
+
 }
