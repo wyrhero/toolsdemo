@@ -2,6 +2,8 @@ package com.wyrhero.java8.date;
 
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import static java.time.temporal.TemporalAdjusters.*;
 
@@ -29,6 +31,31 @@ public class LocalDateDemo {
         System.out.println(with);
         System.out.println(with1);
 
+        System.out.println("==================测试相隔天数=========================");
+        LocalDate localDate4 = LocalDate.of(2019, 10, 11);
+        LocalDate localDate5 = LocalDate.of(2019, 10, 12);
+        LocalDate localDate6 = LocalDate.of(2019, 10, 13);
+        LocalDate localDate7 = dateToLocalDate(new Date());
+        System.out.println(localDate5.until(localDate4).getDays());
+        System.out.println(localDate5.until(localDate5).getDays());
+        System.out.println(localDate5.until(localDate6).getDays());
+        System.out.println(localDate5.until(localDate7).getDays());
 
+        System.out.println("==================测试格式化日期=========================");
+        LocalDate natureDay = LocalDate.now();
+        LocalDateTime now = LocalDateTime.now();
+        String format = natureDay.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+        String format1 = now.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+
+        System.out.println(format);
+        System.out.println(format1);
+
+
+    }
+
+    public static LocalDate dateToLocalDate(Date date){
+        Instant instant = date.toInstant();
+        ZoneId zoneId = ZoneId.systemDefault();
+        return LocalDateTime.ofInstant(instant,zoneId).toLocalDate();
     }
 }
