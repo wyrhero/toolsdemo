@@ -3,7 +3,10 @@ package com.wyrhero.java8.date;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.time.temporal.TemporalAdjusters.*;
 
@@ -12,7 +15,7 @@ public class LocalDateDemo {
         //初始化日期
         LocalDate localDate = LocalDate.of(2019,10,31);
         LocalDate localDate2 = LocalDate.of(2018,11,18);
-
+        
         //时间间隔
         Period period = Period.between(localDate,localDate2);
         LocalDate localDate1 = localDate.plusMonths(4);
@@ -34,12 +37,19 @@ public class LocalDateDemo {
         System.out.println("==================测试相隔天数=========================");
         LocalDate localDate4 = LocalDate.of(2019, 10, 11);
         LocalDate localDate5 = LocalDate.of(2019, 10, 12);
-        LocalDate localDate6 = LocalDate.of(2019, 10, 13);
-        LocalDate localDate7 = dateToLocalDate(new Date());
+        LocalDate localDate6 = LocalDate.of(2020, 10, 13);
+
         System.out.println(localDate5.until(localDate4).getDays());
         System.out.println(localDate5.until(localDate5).getDays());
         System.out.println(localDate5.until(localDate6).getDays());
-        System.out.println(localDate5.until(localDate7).getDays());
+        System.out.println(localDate5.until(localDate6).getDays());
+        System.out.println(localDate5.isAfter(localDate4));
+        System.out.println(localDate5.isAfter(localDate5));
+        System.out.println(localDate5.isAfter(localDate6));
+        System.out.println("以下测试until");
+        System.out.println(localDate.until(localDate2));
+        System.out.println(localDate.until(localDate6, ChronoUnit.DAYS));
+        System.out.println(LocalDate.of(2018,12,26).until(LocalDate.of(2020,01,9), ChronoUnit.DAYS));
 
         System.out.println("==================测试格式化日期=========================");
         LocalDate natureDay = LocalDate.now();
@@ -51,11 +61,40 @@ public class LocalDateDemo {
         System.out.println(format1);
 
 
+        System.out.println("==================测试LocalDate和Date互相格式化=========================");
+        LocalDate localDate7 = dateToLocalDate(new Date());
+        Date localDate8 = localDateToDate(LocalDate.now());
+        System.out.println(localDate7);
+        System.out.println(localDate8);
+
+
+        System.out.println("==================测试String转LocalDate========================= yyyy-MM-dd HH:mm:ss:SSS ");
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate9 = LocalDate.parse("2019-12-16", fmt);
+        System.out.println(localDate9);
+
+        List<Integer> abc = new ArrayList();
+        abc.add(1);
+        abc.add(2);
+        abc.add(3);
+        abc.add(4);
+        abc.add(4);
+        abc.add(4);
+        Collections.reverse(abc);
+        System.out.println(abc);
+        Set<Integer> collect = abc.stream().collect(Collectors.toSet());
+        System.out.println(collect);
     }
 
     public static LocalDate dateToLocalDate(Date date){
         Instant instant = date.toInstant();
         ZoneId zoneId = ZoneId.systemDefault();
         return LocalDateTime.ofInstant(instant,zoneId).toLocalDate();
+    }
+
+    public static Date localDateToDate(LocalDate localDate){
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zonedDateTime = localDate.atStartOfDay(zoneId);
+        return Date.from(zonedDateTime.toInstant());
     }
 }
