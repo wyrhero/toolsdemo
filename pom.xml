@@ -10,7 +10,7 @@
 
     <properties>
         <thunbnailator.version>0.4.8</thunbnailator.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <org.mockito.version>1.10.19</org.mockito.version>
         <org.powermock.version>1.6.5</org.powermock.version>
     </properties>
