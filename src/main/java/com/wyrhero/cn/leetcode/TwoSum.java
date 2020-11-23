@@ -1,5 +1,7 @@
 package com.wyrhero.cn.leetcode;
 
+import java.util.*;
+
 /**
  给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
 
@@ -16,10 +18,28 @@ package com.wyrhero.cn.leetcode;
 public class TwoSum {
 
     public static int[] twoSum(int[] nums, int target) {
-        for(int i = 0; i < nums.length - 1; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                if(target == nums[i] + nums[j]) {
-                    return  new int[]{i,j};
+        List<Integer> subList = new ArrayList<Integer>();
+        List<Integer> numsList = new ArrayList<Integer>();
+
+        //key为对应的值  value为 出现次数
+        Map<Integer,Integer> numsMap = new HashMap<Integer,Integer>();
+        for(int i = 0; i < nums.length; i++) {
+            Integer count = numsMap.get(nums[i]);
+            if(null != count && 2 == count) {
+                continue;
+            }
+            if(null == count) {
+                numsMap.put(nums[i],1);
+            } else {
+                numsMap.put(nums[i],count + 1);
+            }
+            subList.add(i);
+            numsList.add(nums[i]);
+        }
+        for(int i = 0; i < numsList.size() - 1; i++) {
+            for (int j = i + 1; j < numsList.size(); j++) {
+                if(target == numsList.get(i) + numsList.get(j)) {
+                    return  new int[]{subList.get(i),subList.get(j)};
                 }
             }
         }
@@ -28,7 +48,8 @@ public class TwoSum {
 
 
     public static void main(String[] args) {
-        int[] ints = twoSum(new int[]{2, 7, 11, 15}, 9);
-        System.out.println();
+        //int[] ints = twoSum(new int[]{2, 7, 11, 15}, 9);
+        int[] ints = twoSum(new int[]{3,2, 4}, 6);
+        System.out.println(ints);
     }
 }
